@@ -32,10 +32,6 @@
     return [self.programStack copy];
 }
 
-+ (NSString *)descriptionOfProgram:(id)program {
-    return @"Implement this in Homework #2";
-}
-
 - (void)pushOperand:(double)operand {
     [self.programStack addObject:[NSNumber numberWithDouble:operand]];
 }
@@ -99,7 +95,7 @@
 }
 
 + (NSSet *)operations {
-    return [[NSSet setWithObjects:@"sin",@"cos",@"sqrt",@"π", nil] setByAddingObjectsFromSet:[self twoOperandOperations]];
+    return [[NSSet setWithObjects:@"sin",@"cos",@"sqrt", nil] setByAddingObjectsFromSet:[self twoOperandOperations]];
 }
 
 + (BOOL)isOperation:(NSString *)operation {
@@ -141,6 +137,45 @@
         }
     }
     return [self popOperandOffProgramStack:stack];
+}
+
++ (NSString *)descriptionHelper:(NSMutableArray*)program {
+    NSString *description = @"";
+    id topOfStack = [program lastObject];
+    if (topOfStack) {
+        [program removeLastObject];
+    }
+    if ([topOfStack isKindOfClass:[NSNumber class]]) {
+        description = [NSString stringWithFormat:@"%g",[topOfStack doubleValue]];
+        
+        description = [description stringByAppendingString:[self descriptionHelper:program]];
+    } else if ([topOfStack isKindOfClass:[NSString class]]) {
+        if ([self isTwoOperandOperation:topOfStack]) {
+            description = [[[program objectAtIndex:0] description] stringByAppendingString:topOfStack];
+            [program removeObjectAtIndex:0];
+            if (program.count >2) {
+                description = [description stringByAppendingString:@"("];
+                description = [description stringByAppendingString:[self descriptionHelper:program]];
+                description = [description stringByAppendingString:@")"];
+            } else description = [description stringByAppendingString:[self descriptionHelper:program]];
+        } else if ([self isOperation:topOfStack]) {
+            description = [topOfStack stringByAppendingString:@"("];
+            description = [description stringByAppendingString:[self descriptionHelper:program]];
+            description = [description stringByAppendingString:@")"];
+        } else {
+            description = [topOfStack stringByAppendingString:[self descriptionHelper:program]];
+        }
+    }
+    if (program.count > 0) description = [description stringByAppendingString:@", "];
+    return description;
+}
+
++ (NSString *)descriptionOfProgram:(id)program {
+    if ([program isKindOfClass:[NSArray class]]) {
+        NSMutableArray *stack = [program mutableCopy];
+        return [self descriptionHelper:stack];
+    }
+    return @"";
 }
 
 - (void)clear {

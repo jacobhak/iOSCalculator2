@@ -24,8 +24,8 @@
 }
 
 - (void) updateDisplay2:(NSString *)string {
-    NSString *newDisplay2 = [self.display2.text stringByAppendingString:@" "];
-    self.display2.text = [newDisplay2 stringByAppendingString:string];
+    //NSString *newDisplay2 = [self.display2.text stringByAppendingString:@" "];
+    self.display2.text = [CalculatorBrain descriptionOfProgram:self.brain.program];//[newDisplay2 stringByAppendingString:string];
 }
 
 - (IBAction)digitPressed:(UIButton *)sender {
@@ -72,8 +72,8 @@
         [self enterPressed];
     }
     NSString *operation = [sender currentTitle];
-    [self updateDisplay2:operation];
     double result = [self.brain performOperation:operation];
+    [self updateDisplay2:operation];
     self.display.text = [NSString stringWithFormat:@"%g", result];
 }
 
