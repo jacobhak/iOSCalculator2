@@ -213,4 +213,8 @@
     self.programStack = nil;
 }
 
+- (void)removeLastOperand {
+    [self.programStack removeLastObject];
+}
+
 @end

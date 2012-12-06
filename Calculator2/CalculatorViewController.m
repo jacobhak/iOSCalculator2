@@ -23,9 +23,8 @@
     return _brain;
 }
 
-- (void) updateDisplay2:(NSString *)string {
-    //NSString *newDisplay2 = [self.display2.text stringByAppendingString:@" "];
-    self.display2.text = [CalculatorBrain descriptionOfProgram:self.brain.program];//[newDisplay2 stringByAppendingString:string];
+- (void) updateDisplay2 {
+    self.display2.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
 }
 
 - (IBAction)digitPressed:(UIButton *)sender {
@@ -46,7 +45,7 @@
 
 - (IBAction)enterPressed {
     [self.brain pushOperand:[self.display.text doubleValue]];
-    [self updateDisplay2:self.display.text];
+    [self updateDisplay2];
     self.userIsEnteringNumber = NO;
 }
 - (IBAction)variablePressed:(UIButton *)sender {
@@ -54,7 +53,7 @@
         [self enterPressed];
     }
     [self.brain pushVariable:[sender currentTitle]];
-    [self updateDisplay2:[sender currentTitle]];
+    [self updateDisplay2];
     
 }
 - (IBAction)testPressed:(UIButton *)sender {
@@ -85,15 +84,22 @@
     }
     NSString *operation = [sender currentTitle];
     double result = [self.brain performOperation:operation];
-    [self updateDisplay2:operation];
+    [self updateDisplay2];
     self.display.text = [NSString stringWithFormat:@"%g", result];
 }
 - (IBAction)undoPressed {
+    if (self.userIsEnteringNumber && self.display.text.length >0) {
+        self.display.text = [self.display.text substringToIndex:self.display.text.length-1];
+    } else {
+        [self.brain removeLastOperand];
+        [self updateDisplay2];
+    }
 }
 
 - (IBAction)clearPressed {
     [self.brain clear];
     self.display.text = @"0";
     self.display2.text = @"";
+    self.userIsEnteringNumber = NO;
 }
 @end
