@@ -139,6 +139,16 @@
     return [self popOperandOffProgramStack:stack];
 }
 
++ (NSString *)descriptionHelp:(id)operand {
+    NSString *string = @"";
+    if ([operand isKindOfClass:[NSNumber class]]) {
+        string = [string stringByAppendingString:[NSString stringWithFormat:@"%g",[operand doubleValue]]];
+    } else if ([operand isKindOfClass:[NSString class]]) {
+        string = [string stringByAppendingString:operand];
+    }
+    return string;
+}
+
 + (NSString *)descriptionHelper:(NSMutableArray*)program {
     NSString *description = @"";
     id topOfStack = [program lastObject];
@@ -147,33 +157,53 @@
     }
     if ([topOfStack isKindOfClass:[NSNumber class]]) {
         description = [NSString stringWithFormat:@"%g",[topOfStack doubleValue]];
-        
-        description = [description stringByAppendingString:[self descriptionHelper:program]];
     } else if ([topOfStack isKindOfClass:[NSString class]]) {
         if ([self isTwoOperandOperation:topOfStack]) {
-            description = [[[program objectAtIndex:0] description] stringByAppendingString:topOfStack];
-            [program removeObjectAtIndex:0];
-            if (program.count >2) {
+            if ([self isOperation:[program lastObject]]) {
+                NSString *description2 = [self descriptionHelper:program];
+                description = [self descriptionHelp:[program lastObject]];
+                [program removeLastObject];
+                description = [description stringByAppendingString:topOfStack];
                 description = [description stringByAppendingString:@"("];
-                description = [description stringByAppendingString:[self descriptionHelper:program]];
+                description = [description stringByAppendingString:description2];
                 description = [description stringByAppendingString:@")"];
-            } else description = [description stringByAppendingString:[self descriptionHelper:program]];
+            } else {
+                NSString *s = [self descriptionHelp:[program lastObject]];
+                [program removeLastObject];
+                description = [[self descriptionHelp:[program lastObject]] stringByAppendingString:topOfStack];
+                [program removeLastObject];
+                description = [description stringByAppendingString:s];
+            }
         } else if ([self isOperation:topOfStack]) {
             description = [topOfStack stringByAppendingString:@"("];
-            description = [description stringByAppendingString:[self descriptionHelper:program]];
-            description = [description stringByAppendingString:@")"];
+            id top2 = [program lastObject];
+            [program removeLastObject];
+            if ([top2 isKindOfClass:[NSString class]]) {
+                description = [description stringByAppendingString:[self descriptionHelper:program]];
+                description = [description stringByAppendingString:@", "];
+            } else {
+                description = [description stringByAppendingString:[top2 description]];
+                description = [description stringByAppendingString:@")"];
+                if (program.count > 0) description = [description stringByAppendingString:@", "];
+                description = [description stringByAppendingString:[self descriptionHelper:program]];
+            }
+
         } else {
-            description = [topOfStack stringByAppendingString:[self descriptionHelper:program]];
+            description = [self descriptionHelp:topOfStack];
         }
     }
-    if (program.count > 0) description = [description stringByAppendingString:@", "];
     return description;
 }
 
 + (NSString *)descriptionOfProgram:(id)program {
     if ([program isKindOfClass:[NSArray class]]) {
         NSMutableArray *stack = [program mutableCopy];
-        return [self descriptionHelper:stack];
+        NSString *d = [self descriptionHelper:stack];
+        if (stack.count > 0) {
+            d = [d stringByAppendingString:@", "];
+            d = [d stringByAppendingString:[self descriptionOfProgram:[stack mutableCopy]]];
+        }
+        return d;
     }
     return @"";
 }

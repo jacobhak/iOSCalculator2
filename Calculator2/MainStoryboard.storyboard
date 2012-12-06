@@ -293,6 +293,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9p-Dx-cIK">
+                                <accessibility key="accessibilityConfiguration" label="Program"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="xX1-qX-e94"/>
                                 </constraints>
