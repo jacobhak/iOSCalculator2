@@ -60,9 +60,21 @@
 - (IBAction)testPressed:(UIButton *)sender {
     NSDictionary *dict;
     if ([[sender currentTitle] isEqualToString:@"test1"]) {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:2],@"x", nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:2],@"x",
+                [NSNumber numberWithDouble:4],@"y",nil];
+    } else if ([[sender currentTitle] isEqualToString:@"test2"]) {
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:2],@"x",
+                [NSNumber numberWithDouble:3],@"y",nil];
+    } else if ([[sender currentTitle] isEqualToString:@"nilTest"]) dict = nil;
+    NSString * str = @"";
+    NSSet *set =[CalculatorBrain variablesUsedInProgram:self.brain.program];
+    for (NSString *v in set) {
+        str = [[str stringByAppendingString:v] stringByAppendingString:@" = "];
+        if (dict) str = [str stringByAppendingString:[[dict valueForKey:v]description]];
+        else str = [str stringByAppendingString:@"0"];
+        str = [str stringByAppendingString:@" "];
     }
-    self.display3.text = [dict description];
+    self.display3.text = str;
     double result = [CalculatorBrain runProgram:self.brain.program usingVariableValues:dict];
     self.display.text = [NSString stringWithFormat:@"%g", result];
 }
@@ -75,6 +87,8 @@
     double result = [self.brain performOperation:operation];
     [self updateDisplay2:operation];
     self.display.text = [NSString stringWithFormat:@"%g", result];
+}
+- (IBAction)undoPressed {
 }
 
 - (IBAction)clearPressed {

@@ -129,10 +129,11 @@
     for (int i = 0; i < stack.count; i++) {
         id obj = [stack objectAtIndex:i];
         if ([obj isKindOfClass:[NSString class]]&& ![self isOperation:obj]) {
-            NSNumber *value = [variableValues valueForKey:[stack objectAtIndex:i]];
-            if (value == nil) {
-                value = [NSNumber numberWithDouble:0];
-            }
+            NSNumber *value;
+            if (variableValues) {
+                value = [variableValues valueForKey:[stack objectAtIndex:i]];
+                if (!value) value = [NSNumber numberWithDouble:0];
+            } else value = [NSNumber numberWithDouble:0];
             [stack setObject:value atIndexedSubscript:i];
         }
     }
