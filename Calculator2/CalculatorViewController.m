@@ -102,10 +102,30 @@
     self.display2.text = @"";
     self.userIsEnteringNumber = NO;
 }
+
+-(GraphViewController *)splitViewGraphViewController {
+    id gvc = [self.splitViewController.viewControllers lastObject];
+    if (! [gvc isKindOfClass:[GraphViewController class]]) {
+        gvc = nil;
+    }
+    return gvc;
+}
+- (IBAction)setAndShowGraph{
+    if (self.splitViewController) {
+        [[self splitViewGraphViewController] setFunction:self.brain.program];
+    }
+}
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"Graph"]) {
         [segue.destinationViewController setFunction:self.brain.program];
     }
-    NSLog([CalculatorBrain descriptionOfProgram:self.brain.program]);
+}
+-(void)awakeFromNib {
+    [super awakeFromNib];
+    self.splitViewController.delegate = self;
+}
+
+-(BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation {
+    return NO;
 }
 @end
