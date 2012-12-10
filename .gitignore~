@@ -15,5 +15,8 @@ xcuserdata
 profile
 *.moved-aside
 DerivedData
+<<<<<<< HEAD
 .idea/
-
+=======
+.idea/
+>>>>>>> 6f7afcb4efa969496b1e16f7bc82299a17a06ec2
