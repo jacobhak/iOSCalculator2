@@ -19,6 +19,9 @@
 		164546CA166515DE008E46AF /* CalculatorBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 164546C4166515DE008E46AF /* CalculatorBrain.m */; };
 		164546CB166515DE008E46AF /* CalculatorAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 164546C6166515DE008E46AF /* CalculatorAppDelegate.m */; };
 		164546CC166515DE008E46AF /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 164546C7166515DE008E46AF /* MainStoryboard.storyboard */; };
+		164A402D1671D91F00022673 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 164A402C1671D91F00022673 /* GraphView.m */; };
+		164A40301671D97600022673 /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 164A402F1671D97600022673 /* GraphViewController.m */; };
+		164A40331671DFBE00022673 /* AxesDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 164A40321671DFBE00022673 /* AxesDrawer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,12 @@
 		164546C6166515DE008E46AF /* CalculatorAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorAppDelegate.m; sourceTree = "<group>"; };
 		164546C7166515DE008E46AF /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		164546C8166515DE008E46AF /* CalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorViewController.h; sourceTree = "<group>"; };
+		164A402B1671D91F00022673 /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
+		164A402C1671D91F00022673 /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
+		164A402E1671D97600022673 /* GraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphViewController.h; sourceTree = "<group>"; };
+		164A402F1671D97600022673 /* GraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphViewController.m; sourceTree = "<group>"; };
+		164A40311671DFBE00022673 /* AxesDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxesDrawer.h; sourceTree = "<group>"; };
+		164A40321671DFBE00022673 /* AxesDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxesDrawer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,9 +95,15 @@
 		164546A316651564008E46AF /* Calculator2 */ = {
 			isa = PBXGroup;
 			children = (
+				164A402B1671D91F00022673 /* GraphView.h */,
+				164A402C1671D91F00022673 /* GraphView.m */,
+				164A402E1671D97600022673 /* GraphViewController.h */,
+				164A402F1671D97600022673 /* GraphViewController.m */,
 				164546C2166515DE008E46AF /* CalculatorBrain.h */,
 				164546C3166515DE008E46AF /* CalculatorViewController.m */,
 				164546C4166515DE008E46AF /* CalculatorBrain.m */,
+				164A40311671DFBE00022673 /* AxesDrawer.h */,
+				164A40321671DFBE00022673 /* AxesDrawer.m */,
 				164546C5166515DE008E46AF /* CalculatorAppDelegate.h */,
 				164546C6166515DE008E46AF /* CalculatorAppDelegate.m */,
 				164546C7166515DE008E46AF /* MainStoryboard.storyboard */,
@@ -183,6 +198,9 @@
 				164546C9166515DE008E46AF /* CalculatorViewController.m in Sources */,
 				164546CA166515DE008E46AF /* CalculatorBrain.m in Sources */,
 				164546CB166515DE008E46AF /* CalculatorAppDelegate.m in Sources */,
+				164A402D1671D91F00022673 /* GraphView.m in Sources */,
+				164A40301671D97600022673 /* GraphViewController.m in Sources */,
+				164A40331671DFBE00022673 /* AxesDrawer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +309,7 @@
 				164546BF16651564008E46AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

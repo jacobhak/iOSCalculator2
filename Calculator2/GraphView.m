@@ -73,6 +73,10 @@
     }
 }
 
+-(void)tripleTap:(UITapGestureRecognizer *)gesture {
+    self.origin = [gesture locationOfTouch:0 inView:self];
+}
+
 - (void)setup {
     self.contentMode = UIViewContentModeRedraw;
 }

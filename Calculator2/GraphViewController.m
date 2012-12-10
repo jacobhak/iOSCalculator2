@@ -30,14 +30,17 @@
 
 - (void)setFunction:(id)function {
     _function = function;
-    NSLog([@"set" stringByAppendingString:[CalculatorBrain descriptionOfProgram:self.function]]);
-    //[self.graphView setNeedsDisplay];
+    //NSLog([@"set" stringByAppendingString:[CalculatorBrain descriptionOfProgram:self.function]]);
+    [self.graphView setNeedsDisplay];
 }
 
 - (void)setGraphView:(GraphView *)graphView {
     _graphView = graphView;
     [self.graphView addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pinch:)]];
     [self.graphView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pan:)]];
+    [self.graphView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(tripleTap:)]];
+    UITapGestureRecognizer *tap = self.graphView.gestureRecognizers.lastObject;
+    tap.numberOfTapsRequired = 3;
     self.graphView.dataSource = self;
 }
 
