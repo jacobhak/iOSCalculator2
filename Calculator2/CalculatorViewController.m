@@ -8,6 +8,7 @@
 
 #import "CalculatorViewController.h"
 #import "CalculatorBrain.h"
+#import "GraphViewController.h"
 
 @interface CalculatorViewController ()
 @property (nonatomic) BOOL userIsEnteringNumber;
@@ -73,7 +74,6 @@
         else str = [str stringByAppendingString:@"0"];
         str = [str stringByAppendingString:@" "];
     }
-    self.display3.text = str;
     double result = [CalculatorBrain runProgram:self.brain.program usingVariableValues:dict];
     self.display.text = [NSString stringWithFormat:@"%g", result];
 }
@@ -101,5 +101,11 @@
     self.display.text = @"0";
     self.display2.text = @"";
     self.userIsEnteringNumber = NO;
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Graph"]) {
+        [segue.destinationViewController setFunction:self.brain.program];
+    }
+    NSLog([CalculatorBrain descriptionOfProgram:self.brain.program]);
 }
 @end

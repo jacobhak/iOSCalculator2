@@ -178,16 +178,13 @@
         } else if ([self isOperation:topOfStack]) {
             description = [topOfStack stringByAppendingString:@"("];
             id top2 = [program lastObject];
-            [program removeLastObject];
             if ([top2 isKindOfClass:[NSString class]]) {
                 description = [description stringByAppendingString:[self descriptionHelper:program]];
-                description = [description stringByAppendingString:@", "];
             } else {
+                [program removeLastObject];
                 description = [description stringByAppendingString:[top2 description]];
-                description = [description stringByAppendingString:@")"];
-                if (program.count > 0) description = [description stringByAppendingString:@", "];
-                description = [description stringByAppendingString:[self descriptionHelper:program]];
             }
+            description = [description stringByAppendingString:@")"];
 
         } else {
             description = [self descriptionHelp:topOfStack];
