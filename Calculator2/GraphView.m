@@ -20,26 +20,45 @@
 @synthesize origin = _origin;
 
 #define DEFAULT_SCALE 20;
+#define DEFAULT_ORIGIN_KEY_X @"GraphView.origin.x"
+#define DEFAULT_ORIGIN_KEY_Y @"GraphView.origin.y"
+#define DEFAULT_SCALE_KEY @"GraphView.scale"
 
 - (CGPoint)origin {
-    if (!_origin.x) {
-        CGPoint originPoint;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    CGFloat x = [defaults floatForKey:DEFAULT_ORIGIN_KEY_X];
+    CGFloat y = [defaults floatForKey:DEFAULT_ORIGIN_KEY_Y];
+    CGPoint originPoint;
+    if (x && y) {
+        originPoint.x = x;
+        originPoint.y = y;
+        self.origin = originPoint;
+    } else if (!_origin.x || !x) {
         originPoint.x = self.bounds.size.width/2;
         originPoint.y = self.bounds.size.height - self.bounds.size.height/2;
-        return originPoint;
-    } else return _origin;
+        self.origin = originPoint;
+    }
+    return _origin;
 }
 
 - (void)setOrigin:(CGPoint)origin {
     if (origin.x != _origin.x || origin.y != _origin.y) {
         _origin = origin;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setFloat:origin.x forKey:DEFAULT_ORIGIN_KEY_X];
+        [defaults setFloat:origin.y forKey:DEFAULT_ORIGIN_KEY_Y];
+        [defaults synchronize];
         [self setNeedsDisplay];
     }
 }
 
 - (CGFloat)scale {
-    if (!_scale) {
-        return  DEFAULT_SCALE;
+    CGFloat defaultScale = [[NSUserDefaults standardUserDefaults] floatForKey:DEFAULT_SCALE_KEY];
+    if (defaultScale) {
+        return defaultScale;
+    }else if (!_scale) {
+        self.scale = DEFAULT_SCALE;
+        return  _scale;
     }
     else return _scale;
 }
@@ -47,6 +66,8 @@
 - (void)setScale:(CGFloat)scale {
     if (scale != _scale) {
         _scale = scale;
+        [[NSUserDefaults standardUserDefaults] setFloat:scale forKey:DEFAULT_SCALE_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [self setNeedsDisplay];
     }
 }
